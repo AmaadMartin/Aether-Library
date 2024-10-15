@@ -1,0 +1,8 @@
+openai
+jsonschema
+pydantic
+requests
+aiohttp
+asyncio
+threading
+json
