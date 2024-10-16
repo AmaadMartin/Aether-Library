@@ -26,10 +26,10 @@ class AetherClient:
         self.base_url = base_url
         self.openai = OpenAI(api_key = self.openai_api_key)
 
-    def __call__(self, function_key, input_json, version=None):
-        return self.call_function(function_key, input_json, version)
+    def __call__(self, function_key, input_json, version=None, for_eval=False):
+        return self.call_function(function_key, input_json, version, for_eval)
 
-    def call_function(self, function_key, input_json, version=None):
+    def call_function(self, function_key, input_json, version=None, for_eval=False):
         # Get function parameters
         headers = {'X-API-Key': self.api_key}
         if version is None:
@@ -73,19 +73,22 @@ class AetherClient:
         )
 
         output = json.loads(response.choices[0].message.content)
+        # print("input", input_json)
+        # print("output", output)
 
-        input_data = {
-            "task": function_params['task'],
-            "input": input_json,
-            "output_schema": old_schema,
-            "output": output,
-            "version": function_params['version'],
-            "function_key": function_key,
-            "api_key": self.api_key
-        }
-        # print("input params", input_data)
-        thread = threading.Thread(target=self._run_async_evaluation, args=(input_data, headers))
-        thread.start()
+        if not for_eval:
+            input_data = {
+                "task": function_params['task'],
+                "input": input_json,
+                "output_schema": old_schema,
+                "output": output,
+                "version": function_params['version'],
+                "function_key": function_key,
+                "api_key": self.api_key
+            }
+            # print("input params", input_data)
+            thread = threading.Thread(target=self._run_async_evaluation, args=(input_data, headers))
+            thread.start()
 
         return output
         
