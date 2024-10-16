@@ -4,5 +4,3 @@ pydantic
 requests
 aiohttp
 asyncio
-threading
-json
