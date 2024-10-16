@@ -8,7 +8,7 @@ import asyncio
 import aiohttp
 import threading
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "https://aether-ty31.onrender.com"
 
 class EvaluationInput(BaseModel):
     task: str
