@@ -1,5 +1,5 @@
 <!-- add images/aether_logo_trans.png next to title-->
-![Banner](./images/aether_logo_trans.png)
+![Banner](./images/aether_logo.png)
 # Aether Python Library
 
 ## Installation
