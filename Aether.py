@@ -1,4 +1,4 @@
-# AetherClient.py
+# Aether.py
 import requests
 import json
 from openai import OpenAI
@@ -7,8 +7,12 @@ from pydantic import BaseModel
 import asyncio
 import aiohttp
 import threading
+import os
+from dotenv import load_dotenv
 
-BASE_URL = "https://aether-ty31.onrender.com"
+load_dotenv()
+
+BASE_URL = os.getenv("AETHER_BASE_URL")
 
 class EvaluationInput(BaseModel):
     task: str
