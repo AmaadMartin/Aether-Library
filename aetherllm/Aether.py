@@ -1,6 +1,7 @@
 # library/Aether.py
-from _Aether.AetherAPI import AetherAPI
-from _Aether.AetherFunction import AetherFunction
+from aetherllm._Aether.AetherAPI import AetherAPI
+from aetherllm._Aether.AetherFunction import AetherFunction
+
 
 class Aether:
     def __init__(self, api_key):
@@ -11,5 +12,3 @@ class Aether:
         function = AetherFunction(function_key, self.api, version, openai_key)
         function.init()
         return function
-
-#test commit
