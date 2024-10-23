@@ -54,8 +54,7 @@ class AetherAPI:
         if response.status_code != 200:
             raise Exception(f"Error retrieving function data: {response.text}")
         function_data = response.json()
-        function.version = function_data["current_version"]
-        return function_data
+        return function_data["current_version"]
 
     def createCall(self, function, version, inputs, outputs, logs):
         headers = {"X-API-Key": self.api_key}

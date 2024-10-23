@@ -25,6 +25,7 @@ class AetherFunction:
         self.name = function_data["name"]
         self.task = function_data["task"]
         self.type = function_data["type"]
+        self.parameters = function_data["version_map"][self.version]["parameters"]
 
     def __call__(self, input_json):
         if self.openai_key is None:
@@ -80,22 +81,32 @@ class AetherFunction:
         # print("current", self.current)
         if self.current:
             # print("Getting current version data")
-            self.api.getCurrentVersion(self)
-        return self.api.getParameters(self)
+            current_version = self.api.getCurrentVersion(self)
+            if self.version != current_version:
+                self.parameters = self.api.getParameters(self)
+                self.version = current_version
+        return self.parameters
 
     def __getitem__(self, item):
         # print("current", self.current)
         if self.current:
             # print("Getting current version data")
-            self.api.getCurrentVersion(self)
-        return self.api.getParameter(self, item)
+            current_version = self.api.getCurrentVersion(self)
+            if self.version != current_version:
+                self.parameters = self.api.getParameters(self)
+                self.version = current_version
+        return self.parameters[item]
 
     def __setitem__(self, item, value):
         # print("current", self.current)
         if self.current:
             # print("Getting current version data")
-            self.api.getCurrentVersion(self)
-        return self.api.setParameter(self, item, value)
+            current_version = self.api.getCurrentVersion(self)
+            if self.version != current_version:
+                self.parameters = self.api.getParameters(self)
+                self.version = current_version
+        self.parameters[item] = value
+        self.api.setParameter(self, item, value)
 
     def __str__(self):
         return self.name

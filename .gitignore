@@ -4,5 +4,5 @@ test.ipynb
 .venv/
 build/
 aetherllm.egg-info/
-
 dist/
+.env
