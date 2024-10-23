@@ -25,7 +25,7 @@ class AetherFunction:
         self.name = function_data["name"]
         self.task = function_data["task"]
         self.type = function_data["type"]
-        self.parameters = function_data["version_map"][self.version]["parameters"]
+        self.parameters = self.api.getParameters(self)
         self.input_schema = function_data["input_schema"]
         self.output_schema = function_data["output_schema"]
         self.metrics = function_data["metrics"]
@@ -89,8 +89,8 @@ class AetherFunction:
             # print("Getting current version data")
             current_version = self.api.getCurrentVersion(self)
             if self.version != current_version:
-                self.parameters = self.api.getParameters(self)
                 self.version = current_version
+                self.parameters = self.api.getParameters(self)
         return self.parameters
 
     def __getitem__(self, item):
@@ -99,8 +99,8 @@ class AetherFunction:
             # print("Getting current version data")
             current_version = self.api.getCurrentVersion(self)
             if self.version != current_version:
-                self.parameters = self.api.getParameters(self)
                 self.version = current_version
+                self.parameters = self.api.getParameters(self)
         return self.parameters[item]
 
     def __setitem__(self, item, value):
@@ -109,8 +109,8 @@ class AetherFunction:
             # print("Getting current version data")
             current_version = self.api.getCurrentVersion(self)
             if self.version != current_version:
-                self.parameters = self.api.getParameters(self)
                 self.version = current_version
+                self.parameters = self.api.getParameters(self)
         self.parameters[item] = value
         self.api.setParameter(self, item, value)
 
