@@ -1,5 +1,5 @@
 # library/_Aether/AetherFunction.py
-from aetherllm._Aether.AetherCall import AetherCall
+from .AetherCall import AetherCall
 from openai import OpenAI
 import threading
 import json

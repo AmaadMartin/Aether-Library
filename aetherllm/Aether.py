@@ -1,6 +1,6 @@
 # library/Aether.py
-from aetherllm._Aether.AetherAPI import AetherAPI
-from aetherllm._Aether.AetherFunction import AetherFunction
+from .AetherAPI import AetherAPI
+from .AetherFunction import AetherFunction
 
 
 class Aether:
