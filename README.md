@@ -1,35 +1,58 @@
 <!-- add images/aether_logo_trans.png next to title-->
-![Banner](./images/The_Aether_Black.png)
+![Banner](./aetherllm/images/The_Aether_Black.png)
 # Aether Python Library
 
 ## Installation
-To use the Aether library, clone this repo, pip install the requirements, then move Aether.py into your project's root directory.
-
 ```bash
-pip install -r requirements.txt 
+pip install aetherllm
 ```
-to install the required packages. 
 
 
 ## Example Usage
+Get your API key from the bottom right of the Aether dashboard. Use the function key attached to the function you want to call.
 
+### Flow
 ```python
-from Aether import AetherClient
+from aetherllm import Aether
 
 # Initialize the Aether client
-client = AetherClient(
-    api_key=AETHER_API_KEY, 
-    openai_api_key=OPENAI_API_KEY
-)
+aether = Aether(AETHER_API_KEY)
 
-# Function ID and input data
-function_key = FUNCTION_KEY
-input_data = {
-    "Article": "This is an article...",
-}
+# Initialize the flow
+flow = aether(FLOW_KEY)
 
-# Call the function
-output = client(function_key, input_data)
+
+def custom_function(input_json):
+    # Initialize the call
+    call = flow.init_call()
+
+    call.log("Running custom function")
+    call.input("input", input_json)
+    
+    prompt = flow['prompt']
+    output = "this is the prompt: " + prompt
+
+    call.output("output", output)
+    call.status("completed")
+
+    call.eval()
+    return output
+
+custom_function("test_input")
 ```
 
-Get the API key from the Aether dashboard. Use the function key attached to the function you want to call.
+### Function
+```python
+from aetherllm import Aether
+
+# Initialize the Aether client
+aether = Aether(AETHER_API_KEY)
+
+# Initialize the function
+function = aether(FUNCTION_KEY, openai_key=OPENAI_API_KEY)
+
+# Call the function
+output = function({
+    "Article": "This is an article...",
+})
+```
