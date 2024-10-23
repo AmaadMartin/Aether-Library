@@ -26,6 +26,12 @@ class AetherFunction:
         self.task = function_data["task"]
         self.type = function_data["type"]
         self.parameters = function_data["version_map"][self.version]["parameters"]
+        self.input_schema = function_data["input_schema"]
+        self.output_schema = function_data["output_schema"]
+        self.metrics = function_data["metrics"]
+        self.test_set = function_data["test_set"]
+        self.version_map = function_data["version_map"]
+        self.version_tree = function_data["version_tree"]
 
     def __call__(self, input_json):
         if self.openai_key is None:
@@ -38,7 +44,7 @@ class AetherFunction:
         prompt = params["prompt"]
         model = params["model"]
         temperature = params["temperature"]
-        old_schema = params["output_schema"]
+        old_schema = self.output_schema
         output_schema = self.convert_output_schema_to_openai_function_definition(
             old_schema
         )
