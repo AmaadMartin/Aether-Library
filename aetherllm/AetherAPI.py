@@ -1,9 +1,13 @@
 import os
 import requests
 import aiohttp
+from dotenv import load_dotenv
 
-BASE_URL = "https://aether-ty31.onrender.com"
+load_dotenv()
 
+BASE_URL = os.getenv("AETHER_BASE_URL")
+if not BASE_URL:
+    BASE_URL = "https://aether-ty31.onrender.com"
 
 class AetherAPI:
     def __init__(self, api_key):

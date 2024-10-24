@@ -33,7 +33,7 @@ class AetherFunction:
         self.version_map = function_data["version_map"]
         self.version_tree = function_data["version_tree"]
 
-    def __call__(self, input_json):
+    def __call__(self, input_json, eval=True):
         if self.openai_key is None:
             raise Exception("OpenAI key not set")
 
@@ -67,7 +67,8 @@ class AetherFunction:
         for key in output:
             call.output(key, output[key])
 
-        call.eval()
+        if eval:
+            call.eval()
 
         call.status("complete")
         return output
