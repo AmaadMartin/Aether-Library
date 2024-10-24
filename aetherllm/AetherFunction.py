@@ -3,6 +3,7 @@ from .AetherCall import AetherCall
 from openai import OpenAI
 import threading
 import json
+from decimal import Decimal
 
 
 class AetherFunction:
@@ -41,9 +42,6 @@ class AetherFunction:
         for key in input_json:
             call.input(key, input_json[key])
         params = self.get_parameters()
-        prompt = params["prompt"]
-        model = params["model"]
-        temperature = params["temperature"]
         old_schema = self.output_schema
         output_schema = self.convert_output_schema_to_openai_function_definition(
             old_schema
@@ -54,12 +52,12 @@ class AetherFunction:
         call.status("running")
         # Make OpenAI API call
         response = self.openai.chat.completions.create(
-            model=model,
+            model=params["model"],
             messages=[
-                {"role": "system", "content": prompt},
+                {"role": "system", "content": params["prompt"]},
                 {"role": "user", "content": input},
             ],
-            temperature=temperature,
+            temperature=float(params["temperature"]),
             response_format={"type": "json_schema", "json_schema": output_schema},
         )
 
@@ -78,7 +76,10 @@ class AetherFunction:
 
     def init_call(self):
         if self.current:
-            self.api.getCurrentVersion(self)
+            current_version = self.api.getCurrentVersion(self)
+            if self.version != current_version:
+                self.version = current_version
+                self.parameters = self.api.getParameters(self)
 
         call = AetherCall(self, self.version, self.api)
         call.init()
