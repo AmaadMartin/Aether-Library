@@ -1,7 +1,7 @@
 <!-- add images/aether_logo_trans.png next to title-->
 ![Banner](./aetherllm/images/The_Aether_Black.png)
 # Aether Python Library
-
+[the-aether.com](https://the-aether.com)
 ## Installation
 ```bash
 pip install aetherllm
