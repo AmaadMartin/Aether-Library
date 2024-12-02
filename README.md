@@ -9,7 +9,7 @@ pip install aetherllm
 
 
 ## Example Usage
-Get your API key from the bottom right of the Aether dashboard. Use the function key attached to the function you want to call.
+Get your API key from the bottom right of the [Aether](https://the-aether.com) dashboard. Use the function key attached to the function you want to call.
 
 ### Flow
 ```python
